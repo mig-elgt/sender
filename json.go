@@ -44,8 +44,7 @@ func (js *jsonSender) WithError(code codes.Code, description string) *jsonSender
 	return js
 }
 
-// WithFieldError creates new error response and add a new field about the
-// error validation.
+// WithFieldError sets a validation error as default with a field custom error.
 func (js *jsonSender) WithFieldError(code codes.Code, field, value string) *jsonSender {
 	js.WithError(code, "One or more fields raised validation errors.")
 	js.err.Fields = map[string]string{field: value}
