@@ -33,7 +33,7 @@ type responseError struct {
 	Fields      map[string]string `json:"fields,omitempty"`
 }
 
-// WithError sets a new error object for the response.
+// WithError sets a new response error.
 func (js *jsonSender) WithError(code codes.Code, description string) *jsonSender {
 	js.withErr = true
 	js.err = responseError{
