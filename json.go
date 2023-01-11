@@ -51,7 +51,7 @@ func (js *jsonSender) WithFieldError(code codes.Code, field, value string) *json
 	return js
 }
 
-// WithFieldsError registers a set of errors and return the self json instance.
+// WithFieldsError registers a set of custom errors and return a self pointer object.
 func (js *jsonSender) WithFieldsError(code codes.Code, fields map[string]string) *jsonSender {
 	js.WithError(code, "One or more fields raised validation errors.")
 	js.err.Fields = fields

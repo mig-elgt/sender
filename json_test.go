@@ -119,36 +119,36 @@ func TestJsonSender_WithFieldError(t *testing.T) {
 	}
 }
 
-// func TestJsonSender_WithFieldsError(t *testing.T) {
-// 	type args struct {
-// 		w       *httptest.ResponseRecorder
-// 		code    int
-// 		errCode codes.Code
-// 		fields  map[string]string
-// 	}
-// 	cases := map[string]struct {
-// 		args args
-// 		want []byte
-// 	}{
-// 		"fields missing": {
-// 			args: args{
-// 				w:       httptest.NewRecorder(),
-// 				code:    http.StatusUnprocessableEntity,
-// 				errCode: codes.InvalidArgument,
-// 				fields:  map[string]string{"username": "The user name is blank.", "email": "The email is required."},
-// 			},
-// 			want: []byte(fmt.Sprintf("{\"error\":{\"status\":422,\"error\":\"INVALID_ARGUMENT\",\"description\":\"One or more fields raised validation errors.\",\"fields\":{\"email\":\"The email is required.\",\"username\":\"The user name is blank.\"}}}\n")),
-// 		},
-// 	}
-// 	for name, tc := range cases {
-// 		t.Run(name, func(t *testing.T) {
-// 			NewJSON(tc.args.w, tc.args.code).WithFieldsError(tc.args.errCode, tc.args.fields).Send()
-// 			if got, want := tc.args.w.Body.Bytes(), tc.want; !reflect.DeepEqual(got, want) {
-// 				t.Errorf("WithFieldsError(code, fields) got \n%v; want \n%v", string(got), string(want))
-// 			}
-// 		})
-// 	}
-// }
+func TestJsonSender_WithFieldsError(t *testing.T) {
+	type args struct {
+		w       *httptest.ResponseRecorder
+		code    int
+		errCode codes.Code
+		fields  map[string]string
+	}
+	cases := map[string]struct {
+		args args
+		want []byte
+	}{
+		"fields missing": {
+			args: args{
+				w:       httptest.NewRecorder(),
+				code:    http.StatusUnprocessableEntity,
+				errCode: codes.InvalidArgument,
+				fields:  map[string]string{"username": "The user name is blank.", "email": "The email is required."},
+			},
+			want: []byte("{\"error\":{\"status\":422,\"error\":\"INVALID_ARGUMENT\",\"description\":\"One or more fields raised validation errors.\",\"fields\":{\"email\":\"The email is required.\",\"username\":\"The user name is blank.\"}}}\n"),
+		},
+	}
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			NewJSON(tc.args.w, tc.args.code).WithFieldsError(tc.args.errCode, tc.args.fields).Send()
+			if got, want := tc.args.w.Body.Bytes(), tc.want; !reflect.DeepEqual(got, want) {
+				t.Errorf("WithFieldsError(code, fields) got \n%v; want \n%v", string(got), string(want))
+			}
+		})
+	}
+}
 
 // func TestJsonSender_Send(t *testing.T) {
 // 	type newAccount struct {
