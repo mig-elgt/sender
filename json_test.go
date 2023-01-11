@@ -150,43 +150,43 @@ func TestJsonSender_WithFieldsError(t *testing.T) {
 	}
 }
 
-// func TestJsonSender_Send(t *testing.T) {
-// 	type newAccount struct {
-// 		Email     string `json:"email"`
-// 		Activated bool   `json:"activated"`
-// 	}
-// 	type args struct {
-// 		w    *httptest.ResponseRecorder
-// 		code int
-// 		reg  newAccount
-// 	}
-// 	testCases := []struct {
-// 		name string
-// 		args args
-// 		want []byte
-// 	}{
-// 		{
-// 			name: "base-case",
-// 			args: args{
-// 				w:    httptest.NewRecorder(),
-// 				code: http.StatusOK,
-// 				reg:  newAccount{"miguel@gmail.com", false},
-// 			},
-// 			want: []byte(fmt.Sprintf("{\"email\":\"miguel@gmail.com\",\"activated\":false}\n")),
-// 		},
-// 	}
-// 	for _, tc := range testCases {
-// 		t.Run(tc.name, func(t *testing.T) {
-// 			NewJSON(tc.args.w, tc.args.code).Send(tc.args.reg)
-// 			if got, want := tc.args.w.Body.Bytes(), tc.want; !reflect.DeepEqual(got, want) {
-// 				t.Errorf("WithError(code) got \n%+v; want \n%+v", string(got), string(want))
-// 			}
-// 		})
-// 	}
-// }
+func TestJsonSender_Send(t *testing.T) {
+	type newAccount struct {
+		Email     string `json:"email"`
+		Activated bool   `json:"activated"`
+	}
+	type args struct {
+		w    *httptest.ResponseRecorder
+		code int
+		reg  newAccount
+	}
+	testCases := []struct {
+		name string
+		args args
+		want []byte
+	}{
+		{
+			name: "base-case",
+			args: args{
+				w:    httptest.NewRecorder(),
+				code: http.StatusOK,
+				reg:  newAccount{"foobar@domain.com", false},
+			},
+			want: []byte("{\"email\":\"foobar@domain.com\",\"activated\":false}\n"),
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			NewJSON(tc.args.w, tc.args.code).Send(tc.args.reg)
+			if got, want := tc.args.w.Body.Bytes(), tc.want; !reflect.DeepEqual(got, want) {
+				t.Errorf("Send(req) got \n%+v; want \n%+v", string(got), string(want))
+			}
+		})
+	}
+}
 
-// func createWriter(content string) http.ResponseWriter {
-// 	w := httptest.NewRecorder()
-// 	w.Body.WriteString(content)
-// 	return w
-// }
+func createWriter(content string) http.ResponseWriter {
+	w := httptest.NewRecorder()
+	w.Body.WriteString(content)
+	return w
+}

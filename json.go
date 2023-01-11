@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/mig-elgt/sender/codes"
-	"github.com/sirupsen/logrus"
+	"github.com/pkg/errors"
 )
 
 // jsonSender holds the reponse writer to set the http response data
@@ -58,9 +58,9 @@ func (js *jsonSender) WithFieldsError(code codes.Code, fields map[string]string)
 	return js
 }
 
-// Send writes the error response if the sender has an error, or
-// write a new object for a sucess case.
-func (js *jsonSender) Send(content ...interface{}) {
+// Send sends an response error if the sender has one, otherwise
+// response the content value as JSON object.
+func (js *jsonSender) Send(content ...interface{}) error {
 	js.w.Header().Set("Content-Type", "application/json")
 	js.w.WriteHeader(js.statusCode)
 	if js.withErr {
@@ -68,13 +68,13 @@ func (js *jsonSender) Send(content ...interface{}) {
 			Error responseError `json:"error"`
 		}
 		if err := json.NewEncoder(js.w).Encode(&data{Error: js.err}); err != nil {
-			logrus.Errorf("could not read encode json content: %v", err)
+			return errors.Wrapf(err, "could not encode error response: %v", content)
 		}
-		return
 	}
 	if len(content) > 0 {
 		if err := json.NewEncoder(js.w).Encode(&content[0]); err != nil {
-			logrus.Errorf("could not read encode json content: %v", err)
+			return errors.Wrapf(err, "could not encode json response: %v", content)
 		}
 	}
+	return nil
 }
