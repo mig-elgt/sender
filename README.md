@@ -1,6 +1,6 @@
 # HTTP JSON Sender
 
-Sender is a GO library for create a HTTP JSON response using http.ResponseWriter with the next struture
+Sender is a GO library for create a HTTP JSON response using http.ResponseWriter as writer output.
 
 ## Features
 
@@ -19,7 +19,7 @@ $ go get github.com/mig-elgt/sender
 
 ## Usage & Example
 
-# Handle to send a simple error description
+### Handle to send a simple error description
 
 ```go
 func WithErrorHandle(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +38,7 @@ func WithErrorHandle(w http.ResponseWriter, r *http.Request) {
 // }
 ```
 
-# Handle to send a simple error with a field value.
+### Handle to send a simple error with a field value.
 
 ```go
 func WithFieldErrorHandle(w http.ResponseWriter, r *http.Request) {
@@ -62,7 +62,7 @@ func WithFieldErrorHandle(w http.ResponseWriter, r *http.Request) {
 // }
 ```
 
-# Handle to send an error with a set of fields inputs.
+### Handle to send an error with a set of fields inputs.
 
 ``` go
 func WithFieldsErrorHandle(w http.ResponseWriter, r *http.Request) {
@@ -89,32 +89,5 @@ func WithFieldsErrorHandle(w http.ResponseWriter, r *http.Request) {
 //             "user_id": "User ID is required"
 //         }
 //     }
-// }
-```
-
-# Handle to send an error with a set of fields inputs.
-
-``` go
-func OkHandle(w http.ResponseWriter, r *http.Request) {
-
-	type response struct {
-		ID         int64  `json:"id"`
-		User       string `json:"user"`
-		StatusCode int    `json:"status"`
-	}
-	sender.
-		NewJSON(w, http.StatusOK).
-		Send(&response{
-			ID:         1,
-			User:       "foobar",
-			StatusCode: 200,
-		})
-}
-
-// Output
-// {
-//     "id": 1,
-//     "user": "foobar",
-//     "status": 200
 // }
 ```
