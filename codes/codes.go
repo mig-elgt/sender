@@ -6,12 +6,10 @@ const (
 	// AlreadyExists means an attempt to create an entity failed because one
 	// already exists.
 	AlreadyExists Code = 1
-
 	// Internal errors. Means some invariants expected by underlying
 	// system has been broken. If you see one of these errors,
 	// something is very broken.
 	Internal Code = 2
-
 	// InvalidArgument indicates client specified an invalid argument.
 	InvalidArgument Code = 3
 

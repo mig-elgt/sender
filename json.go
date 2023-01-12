@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// jsonSender holds the reponse writer to set the http response data
+// jsonSender holds the reponse writer to set the HTTP Response data
 // about the request.
 type jsonSender struct {
 	w          http.ResponseWriter
