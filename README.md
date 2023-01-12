@@ -55,9 +55,12 @@ func WithFieldErrorHandle(w http.ResponseWriter, r *http.Request) {
 // Output
 // {
 //     "error": {
-//         "status": 500,
-//         "error": "INTERNAL",
-//         "description": "Something went wrong..."
+//         "status": 400,
+//         "error": "INVALID_ARGUMENT",
+//         "description": "One or more fields raised validation errors.",
+//         "fields": {
+//             "user_id": "User ID is required"
+//         }
 //     }
 // }
 ```
