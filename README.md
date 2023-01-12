@@ -24,9 +24,9 @@ $ go get github.com/mig-elgt/sender
 ```go
 func WithErrorHandle(w http.ResponseWriter, r *http.Request) {
 	sender.
-		NewJSON(w, http.StatusInternalServerError).
-		WithError(codes.Internal, "Something went wrong..").
-		Send()
+	   NewJSON(w, http.StatusInternalServerError).
+	   WithError(codes.Internal, "Something went wrong..").
+	   Send()
 }
 // Output
 // {
@@ -43,13 +43,13 @@ func WithErrorHandle(w http.ResponseWriter, r *http.Request) {
 ```go
 func WithFieldErrorHandle(w http.ResponseWriter, r *http.Request) {
 	sender.
-		NewJSON(w, http.StatusBadRequest).
-		WithFieldError(
-			codes.InvalidArgument,
-			"user_id",
-			"User ID is required",
-		).
-		Send()
+	   NewJSON(w, http.StatusBadRequest).
+	   WithFieldError(
+	      codes.InvalidArgument,
+		  "user_id",
+		  "User ID is required",
+	   ).
+	   Send()
 }
 
 // Output
@@ -70,15 +70,15 @@ func WithFieldErrorHandle(w http.ResponseWriter, r *http.Request) {
 ``` go
 func WithFieldsErrorHandle(w http.ResponseWriter, r *http.Request) {
 	sender.
-		NewJSON(w, http.StatusBadRequest).
-		WithFieldsError(
-			codes.InvalidArgument,
+	  NewJSON(w, http.StatusBadRequest).
+	  WithFieldsError(
+		codes.InvalidArgument,
 			map[string]string{
 				"user_id": "User ID is required",
 				"email":   "Email has invalid format",
 			},
-		).
-		Send()
+	  ).
+	  Send()
 }
 
 // Output
@@ -99,15 +99,16 @@ func WithFieldsErrorHandle(w http.ResponseWriter, r *http.Request) {
 
 ``` go
 func Handle(w http.ResponseWriter, r *http.Request) {
-    type response struct {
-	   Status int `json:"status"`
-	   ID int     `json:"id"` 
-	}
-	sender.
-		NewJSON(w, http.StatusOk).Send(&response{
-			Status: 200,
-			ID: 100,
-		})
+   type response struct {
+     Status int `json:"status"`
+	 ID int     `json:"id"` 
+   }
+   sender.
+      NewJSON(w, http.StatusOk).
+	  Send(&response{
+	     Status: 200,
+	     ID: 100,
+	  })
 }
 
 // Output
