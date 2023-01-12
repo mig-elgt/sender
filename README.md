@@ -94,3 +94,25 @@ func WithFieldsErrorHandle(w http.ResponseWriter, r *http.Request) {
 //     }
 // }
 ```
+
+### Handle to send a JSON object without errors.
+
+``` go
+func Handle(w http.ResponseWriter, r *http.Request) {
+    type response struct {
+	   Status int `json:"status"`
+	   ID int     `json:"id"` 
+	}
+	sender.
+		NewJSON(w, http.StatusOk).Send(&response{
+			Status: 200,
+			ID: 100,
+		})
+}
+
+// Output
+// {
+//  	"status": 200,
+//  	"id": 100,
+// }
+```
